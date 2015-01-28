@@ -1,0 +1,35 @@
+<% provide(:title, @entry.title) %>
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <h3>Author</h3>
+      <h1>
+        <%= gravatar_for @user %>
+        <%= @user.name %>
+      </h1>
+    </section>
+    <section class="stats">
+      <%= render 'shared/stats' %>
+    </section>
+  </aside>
+  <div class="col-md-8">
+    <section>
+      <h3><%= @entry.title %></h3>
+      <p><%= @entry.body %></p> 
+    </section>
+    <section class="comment_form">
+      <% if logged_in? %>
+        <%= render "comment_form" %>    
+      <% end %>
+    </section>
+    <section>
+      <% if @entry.comments.any? %>
+        <h3>Comments (<%= @entry.comments.count %>)</h3>
+        <ol class="comments">
+          <%= render @comments %>
+        </ol>
+        <%= will_paginate @comments %>
+      <% end %>
+    </section>
+  </div>
+</div>
