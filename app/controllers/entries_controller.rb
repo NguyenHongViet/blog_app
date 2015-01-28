@@ -22,7 +22,7 @@ class EntriesController < ApplicationController
 	def show
 		@entry = Entry.find(params[:id])
 		@user = User.find(@entry.user_id)
-		@comments = @entry.comments.paginate(page: params[:page])
+		@comments = @entry.comments.paginate(page: params[:page], per_page: 8)
 		@comment = @entry.comments.build if logged_in?
 	end
 
