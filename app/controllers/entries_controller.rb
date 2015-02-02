@@ -23,7 +23,7 @@ class EntriesController < ApplicationController
 		@entry = Entry.find(params[:id])
 		@user = User.find(@entry.user_id)
 		@comments = @entry.comments.paginate(page: params[:page], per_page: 8)
-		@comment = @entry.comments.build if logged_in?
+		@comment = @entry.comments.build if can_make_comment?
 	end
 
 	private
@@ -34,5 +34,14 @@ class EntriesController < ApplicationController
 		def correct_user
 			@entry = current_user.entries.find_by(id: params[:id])
 			redirect_to root_url if @entry.nil?
+		end
+
+		def can_make_comment?
+			author = @entry.user
+			if (current_user == author) || (current_user.following?(author))
+				return true
+			else
+				return false
+			end
 		end
 end

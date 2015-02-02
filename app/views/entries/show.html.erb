@@ -18,7 +18,7 @@
       <p><%= @entry.body %></p> 
     </section>
     <section class="comment_form">
-      <% if logged_in? %>
+      <% if !@comment.nil? %>
         <%= render "comment_form" %>    
       <% end %>
     </section>
