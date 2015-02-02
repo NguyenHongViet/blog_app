@@ -38,7 +38,7 @@ class EntriesController < ApplicationController
 
 		def can_make_comment?
 			author = @entry.user
-			if (current_user == author) || (current_user.following?(author))
+			if logged_in? && ((current_user == author) || (current_user.following?(author)))
 				return true
 			else
 				return false
